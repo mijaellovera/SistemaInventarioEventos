@@ -107,10 +107,18 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseStaticFiles();
+
+var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "Uploads");
+
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(builder.Environment.ContentRootPath, "Uploads")),
+    FileProvider = new PhysicalFileProvider(uploadsPath),
     RequestPath = "/Uploads"
 });
 
